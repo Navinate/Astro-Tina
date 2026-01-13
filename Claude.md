@@ -177,12 +177,14 @@ export default defineConfig({
 ### Running the Development Server
 
 ```bash
-# Start Astro dev server
+# Option 1: Start Astro dev server only
 pnpm run dev
 
-# Start Tina CMS (in separate terminal)
-pnpm dlx tinacms dev -c "pnpm run dev"
+# Option 2: Start Astro with Tina CMS (recommended)
+pnpm run dev:tina
 ```
+
+**Note**: Use `dev:tina` to enable the Tina CMS visual editor at `/admin`.
 
 ### Content Management
 

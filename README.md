@@ -31,14 +31,16 @@ Get your Tina CMS credentials from [tina.io](https://tina.io) after creating a p
 ### 3. Run Development Server
 
 ```bash
-# Start Astro dev server
+# Option 1: Start Astro dev server only
 pnpm run dev
 
-# Start Tina CMS (in separate terminal)
-pnpm dlx tinacms dev -c "pnpm run dev"
+# Option 2: Start Astro with Tina CMS (recommended)
+pnpm run dev:tina
 ```
 
 The site will be available at `http://localhost:4321` and the Tina CMS admin at `http://localhost:4321/admin`.
+
+**Note**: Use `dev:tina` to enable the Tina CMS visual editor. This starts both the Astro dev server and Tina's admin interface.
 
 ## Project Structure
 
@@ -84,10 +86,10 @@ Blog posts are stored in `content/blog/` as MDX files and can be edited through:
 
 ## Available Scripts
 
-- `pnpm run dev` - Start development server
+- `pnpm run dev` - Start Astro development server
+- `pnpm run dev:tina` - Start Astro with Tina CMS admin (recommended)
 - `pnpm run build` - Build for production
 - `pnpm run preview` - Preview production build
-- `pnpm dlx tinacms dev -c "pnpm run dev"` - Run with Tina CMS
 
 ## Philosophy
 
