@@ -1,0 +1,79 @@
+---
+title: Building Content-Rich Sites with Tina CMS
+date: '2024-01-20'
+author: Jane Smith
+excerpt: Discover how Tina CMS provides a visual editing experience while keeping your content in Git.
+tags:
+  - Tina CMS
+  - Content Management
+  - Git
+draft: false
+---
+
+# Building Content-Rich Sites with Tina CMS
+
+Tina CMS is a Git-backed headless CMS that provides a visual editing experience for your content. Let's explore how it works and why it's a great choice for modern web development.
+
+## What Makes Tina Special?
+
+Unlike traditional CMSs that store content in databases, Tina CMS stores everything in Git. This means:
+
+- **Version Control**: Every change is tracked in your Git history
+- **No Vendor Lock-in**: Your content is just markdown files
+- **Developer-Friendly**: Work with content as code
+- **Visual Editing**: Non-technical users get a friendly interface
+
+## Setting Up Tina CMS
+
+Getting started with Tina is straightforward:
+
+```bash
+pnpm install tinacms @tinacms/cli
+```
+
+Then configure your content schema in `tina/config.ts`:
+
+```typescript
+import { defineConfig } from 'tinacms';
+
+export default defineConfig({
+  schema: {
+    collections: [
+      {
+        name: 'blog',
+        label: 'Blog Posts',
+        path: 'content/blog',
+        fields: [
+          {
+            type: 'string',
+            name: 'title',
+            label: 'Title',
+            required: true,
+          },
+          // More fields...
+        ],
+      },
+    ],
+  },
+});
+```
+
+## Content Modeling
+
+Tina's content modeling is powerful and flexible. You can create:
+
+- Rich text content with MDX support
+- Media fields for images and files
+- Relationship fields between content
+- Custom components in your MDX
+
+## Best Practices
+
+1. **Keep schemas simple**: Start with basic fields and expand as needed
+2. **Use descriptive labels**: Help editors understand what each field is for
+3. **Validate your data**: Use required fields and validation rules
+4. **Test the editing experience**: Make sure it's intuitive for your content team
+
+## Conclusion
+
+Tina CMS combines the best of both worlds: a great editing experience for content creators and a developer-friendly approach that keeps everything in Git. It's perfect for teams who want flexibility without sacrificing user experience.

@@ -1,0 +1,106 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+
+// Get all blog posts and sort by date (newest first)
+const allBlogPosts = await getCollection('blog');
+const publishedPosts = allBlogPosts
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => {
+    return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+  });
+---
+
+<PageLayout
+  title="Blog"
+  description="Read our latest articles and insights"
+>
+  <div class="blog-page">
+    <div class="container">
+      <header class="blog-header">
+        <h1 class="blog-title">Blog</h1>
+        <p class="blog-description">
+          Insights, tutorials, and updates from our team
+        </p>
+      </header>
+
+      {
+        publishedPosts.length === 0 ? (
+          <div class="blog-empty">
+            <p>No blog posts yet. Check back soon!</p>
+          </div>
+        ) : (
+          <div class="blog-grid">
+            {publishedPosts.map((post) => (
+              <BlogCard
+                title={post.data.title}
+                excerpt={post.data.excerpt}
+                date={post.data.date}
+                author={post.data.author}
+                slug={post.slug}
+                featuredImage={post.data.featured_image}
+                tags={post.data.tags}
+              />
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </div>
+</PageLayout>
+
+<style>
+  .blog-page {
+    padding: var(--space-3xl) 0;
+  }
+
+  .blog-header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+  }
+
+  .blog-title {
+    font-size: var(--text-5xl);
+    margin-bottom: var(--space-md);
+  }
+
+  .blog-description {
+    font-size: var(--text-xl);
+    color: #6b7280;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-2xl);
+  }
+
+  .blog-empty {
+    text-align: center;
+    padding: var(--space-3xl) 0;
+    color: #6b7280;
+    font-size: var(--text-lg);
+  }
+
+  @media (max-width: 768px) {
+    .blog-page {
+      padding: var(--space-2xl) 0;
+    }
+
+    .blog-title {
+      font-size: var(--text-4xl);
+    }
+
+    .blog-description {
+      font-size: var(--text-lg);
+    }
+
+    .blog-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+  }
+</style>

@@ -1,0 +1,104 @@
+---
+title: Why HTML and CSS Should Come First
+date: '2024-01-25'
+author: Alex Johnson
+excerpt: Exploring the benefits of building websites with HTML and CSS before reaching for JavaScript frameworks.
+tags:
+  - HTML
+  - CSS
+  - Web Performance
+  - Best Practices
+draft: false
+---
+
+# Why HTML and CSS Should Come First
+
+In the age of JavaScript frameworks, it's easy to forget the power of plain HTML and CSS. Let's explore why starting with these fundamentals leads to better websites.
+
+## The Problem with JavaScript-First
+
+Many modern websites ship megabytes of JavaScript for features that could be accomplished with pure HTML and CSS. This leads to:
+
+- **Slower load times**: More code means longer downloads
+- **Accessibility issues**: Screen readers work better with semantic HTML
+- **Higher costs**: More JavaScript means more processing power needed
+- **Fragile experiences**: Broken JavaScript means broken sites
+
+## What Can You Build Without JavaScript?
+
+More than you think! Here are some common features that don't need JavaScript:
+
+### Navigation Menus
+
+```html
+<input type="checkbox" id="menu-toggle" hidden>
+<label for="menu-toggle">☰</label>
+<nav class="mobile-menu">
+  <!-- menu items -->
+</nav>
+```
+
+With CSS:
+
+```css
+.mobile-menu { display: none; }
+#menu-toggle:checked ~ .mobile-menu { display: block; }
+```
+
+### Accordions
+
+Use the native `<details>` element:
+
+```html
+<details>
+  <summary>Click to expand</summary>
+  <p>Hidden content here</p>
+</details>
+```
+
+### Tabs
+
+Use CSS `:target` pseudo-class:
+
+```html
+<a href="#tab1">Tab 1</a>
+<a href="#tab2">Tab 2</a>
+<div id="tab1">Content 1</div>
+<div id="tab2">Content 2</div>
+```
+
+## Progressive Enhancement
+
+The key is progressive enhancement:
+
+1. Start with HTML (works everywhere)
+2. Add CSS (enhances presentation)
+3. Add JavaScript (only when truly needed)
+
+This ensures your site works even when JavaScript fails or is disabled.
+
+## Modern CSS is Powerful
+
+CSS has evolved significantly. Modern features include:
+
+- **Grid and Flexbox**: Complex layouts without frameworks
+- **Custom Properties**: Dynamic theming and styling
+- **Container Queries**: Component-level responsive design
+- **Animation**: Smooth transitions and effects
+- **`:has()` selector**: Parent selection without JavaScript
+
+## When to Use JavaScript
+
+JavaScript is still important! Use it when you need:
+
+- Real-time data updates
+- Complex form validation
+- Client-side routing
+- Third-party API integrations
+- Features impossible with HTML/CSS alone
+
+## Conclusion
+
+By starting with HTML and CSS, you build faster, more accessible, and more resilient websites. JavaScript should enhance the experience, not be required for basic functionality.
+
+Remember: **HTML for structure, CSS for style, JavaScript for behavior**.

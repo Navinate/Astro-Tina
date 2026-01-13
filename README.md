@@ -65,6 +65,23 @@ The site will be available at `http://localhost:4321` and the Tina CMS admin at 
 └── tsconfig.json
 ```
 
+## Features
+
+### Blog
+
+The site includes a fully functional blog powered by Astro's content collections and Tina CMS:
+
+- **Blog Listing**: View all published posts at `/blog`
+- **Individual Posts**: Dynamic routes for each blog post at `/blog/[slug]`
+- **Tina CMS Integration**: Manage blog posts through the visual editor at `/admin`
+- **MDX Support**: Write rich content with markdown and embedded components
+- **Metadata**: Title, date, author, excerpt, featured images, and tags
+- **Draft Mode**: Hide unpublished posts from the listing
+
+Blog posts are stored in `content/blog/` as MDX files and can be edited through:
+1. The Tina CMS admin interface at `/admin`
+2. Directly editing the `.mdx` files in your code editor
+
 ## Available Scripts
 
 - `pnpm run dev` - Start development server

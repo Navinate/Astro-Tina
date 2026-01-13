@@ -54,6 +54,76 @@ export default defineConfig({
           },
         ],
       },
+      {
+        name: 'blog',
+        label: 'Blog Posts',
+        path: 'content/blog',
+        format: 'mdx',
+        defaultItem: () => {
+          return {
+            title: 'New Blog Post',
+            date: new Date().toISOString(),
+            author: 'Author Name',
+          };
+        },
+        fields: [
+          {
+            type: 'string',
+            name: 'title',
+            label: 'Title',
+            isTitle: true,
+            required: true,
+          },
+          {
+            type: 'datetime',
+            name: 'date',
+            label: 'Published Date',
+            required: true,
+            ui: {
+              dateFormat: 'YYYY-MM-DD',
+            },
+          },
+          {
+            type: 'string',
+            name: 'author',
+            label: 'Author',
+            required: true,
+          },
+          {
+            type: 'string',
+            name: 'excerpt',
+            label: 'Excerpt',
+            required: true,
+            ui: {
+              component: 'textarea',
+            },
+          },
+          {
+            type: 'image',
+            name: 'featured_image',
+            label: 'Featured Image',
+          },
+          {
+            type: 'string',
+            name: 'tags',
+            label: 'Tags',
+            list: true,
+          },
+          {
+            type: 'boolean',
+            name: 'draft',
+            label: 'Draft',
+            description: 'Set to true to hide this post from the blog listing',
+          },
+          {
+            type: 'rich-text',
+            name: 'body',
+            label: 'Body',
+            isBody: true,
+            required: true,
+          },
+        ],
+      },
     ],
   },
 });
