@@ -78,33 +78,38 @@ This project is a modern static marketing site built with Astro and Tina CMS, pr
 │   └── templates/
 ├── astro.config.mjs      # Astro configuration
 ├── package.json
+├── pnpm-lock.yaml        # pnpm lock file
 └── tsconfig.json
 ```
+
+**Note**: This project uses pnpm for package management. Always use pnpm commands instead of npm or yarn.
 
 ## Getting Started
 
 ### Prerequisites
 - Node.js 18+
-- npm or yarn
+- pnpm (required - this project uses pnpm exclusively)
 - Git
+
+**Package Manager**: This project uses **pnpm** exclusively. Do not use npm or yarn.
 
 ### Installation
 
 1. **Initialize the project**
    ```bash
-   npm create astro@latest
+   pnpm create astro@latest
    ```
 
 2. **Install Tina CMS**
    ```bash
-   npm install tinacms @tinacms/cli
+   pnpm install tinacms @tinacms/cli
    ```
 
 3. **Install Preact integration (ONLY if needed)**
    ```bash
    # Wait until you actually need client-side interactivity
    # Most sites won't need this initially
-   npx astro add preact
+   pnpm astro add preact
    ```
 
    **Note**: Start without Preact and only add it when you encounter a feature that truly requires client-side JavaScript beyond what HTML/CSS can provide.
@@ -173,10 +178,10 @@ export default defineConfig({
 
 ```bash
 # Start Astro dev server
-npm run dev
+pnpm run dev
 
 # Start Tina CMS (in separate terminal)
-npx tinacms dev -c "npm run dev"
+pnpm dlx tinacms dev -c "pnpm run dev"
 ```
 
 ### Content Management
@@ -189,10 +194,10 @@ npx tinacms dev -c "npm run dev"
 
 ```bash
 # Build the site
-npm run build
+pnpm run build
 
 # Preview the build
-npm run preview
+pnpm run preview
 ```
 
 ## Key Features
@@ -247,72 +252,6 @@ npm run preview
 - Contact form (native HTML form with Astro endpoint)
 - Contact information
 - Map integration (static or iframe)
-
-## Components Architecture
-
-### Philosophy: HTML/CSS First, Astro Second, Preact Last
-
-The site follows a progressive enhancement approach:
-1. **First**: Try to solve with HTML/CSS
-2. **Second**: Use Astro components for static/server-side logic
-3. **Last Resort**: Use Preact only when client-side JavaScript is absolutely required
-
-### Astro Components (Primary)
-Use Astro for 95% of the site:
-- **All layout components** (BaseLayout, PageLayout)
-- **All static sections** (Hero, Features, Testimonials, Footer)
-- **Navigation** (including mobile menus using CSS)
-- **SEO components** (meta tags, structured data)
-- **Cards, grids, and content displays**
-- **Accordions** (using `<details>` and `<summary>`)
-- **Tabs** (using CSS-only solutions)
-- **Simple forms** (using native HTML with server-side handling)
-
-### HTML/CSS Solutions (No JavaScript Needed)
-Many "interactive" features can be built without JavaScript:
-- **Mobile Navigation**: CSS-only hamburger menu with checkbox hack
-- **Accordions**: Native `<details>` and `<summary>` elements
-- **Tabs**: CSS `:target` or radio button pattern
-- **Modals**: HTML `<dialog>` element or CSS overlay
-- **Tooltips**: CSS hover states
-- **Smooth Scrolling**: CSS `scroll-behavior: smooth`
-- **Animations**: CSS transitions and keyframes
-- **Dropdowns**: CSS hover or `:focus-within`
-
-### Preact Components (Minimal - Only When Necessary)
-Use Preact ONLY when you need:
-- **Complex Form Validation**: Multi-step forms with conditional fields
-- **Real-time Data**: Live search, dynamic filtering, API polling
-- **Complex State**: Shopping carts, multi-step wizards with client state
-- **Third-party Integrations**: Embedded widgets requiring JavaScript
-- **Advanced Interactions**: Drag-and-drop, rich text editors, complex calculators
-
-### Real-World Preact Examples (Justified Use Cases)
-
-✅ **GOOD - Justified Preact Usage:**
-- Interactive pricing calculator with real-time API calls for tax/shipping
-- Multi-step form wizard with conditional fields based on user selections
-- Live product search with debounced API requests and filtering
-- Embedded chat widget from third-party service
-- Rich text editor for user-generated content
-
-❌ **BAD - Unnecessary Preact Usage:**
-- Navigation menu (use CSS)
-- Simple contact form (use HTML form + Astro endpoint)
-- Image carousel (use CSS scroll-snap)
-- Accordion/FAQ (use `<details>` element)
-- Modal popups (use `<dialog>` element)
-- Animations (use CSS transitions)
-- Toggle switches (use styled checkboxes)
-
-### Example Decision Tree
-```
-Need interactivity?
-├─ Can it be done with CSS? → Use CSS
-├─ Does it need server data? → Use Astro (SSR/SSG)
-├─ Is it a simple form? → Use HTML form with Astro endpoint
-└─ Complex client state/API calls? → Use Preact (sparingly)
-```
 
 ## Common Features Without JavaScript
 
@@ -413,7 +352,7 @@ export async function POST({ request }) {
 
 ### Build Command
 ```bash
-npm run build
+pnpm run build
 ```
 
 ### Output Directory
@@ -545,7 +484,7 @@ When adding features, always consider the HTML/CSS-first approach:
 ## Maintenance
 
 ### Regular Tasks
-- Update dependencies monthly
+- Update dependencies monthly (using `pnpm update`)
 - Review and optimize bundle size
 - Monitor Core Web Vitals
 - Update content regularly
