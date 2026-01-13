@@ -1,8 +1,10 @@
-# Static Marketing Site with Preact, Astro, and Tina CMS
+# Static Marketing Site with Astro and Tina CMS
 
 ## Project Overview
 
-This project is a modern static marketing site built with a powerful combination of technologies designed for performance, developer experience, and content management flexibility.
+This project is a modern static marketing site built with Astro and Tina CMS, prioritizing performance through minimal JavaScript. The site follows a progressive enhancement philosophy: HTML/CSS first, Astro second, and client-side JavaScript (Preact) only as a last resort when absolutely necessary.
+
+**Core Philosophy**: Build a fast, accessible, SEO-friendly marketing site that ships virtually zero JavaScript by leveraging modern HTML/CSS capabilities and Astro's static generation.
 
 ## Tech Stack
 
@@ -16,12 +18,20 @@ This project is a modern static marketing site built with a powerful combination
   - SEO optimization
 
 ### Preact
-- **Purpose**: Interactive UI components
-- **Why**: Lightweight React alternative (3KB), fast, familiar React-like API
-- **Use Cases**:
-  - Interactive components (forms, navigation, modals)
-  - Client-side interactivity where needed
-  - Partial hydration for performance
+- **Purpose**: Interactive UI components (sparingly used)
+- **Why**: Lightweight React alternative (3KB), only when HTML/CSS can't handle the interaction
+- **Use Cases** (minimal - only when necessary):
+  - Complex state management beyond HTML/CSS
+  - Real-time data fetching and updates
+  - Advanced form validation with dynamic fields
+  - Third-party integrations requiring client-side JavaScript
+- **When NOT to use**:
+  - Navigation menus (use CSS for dropdowns/mobile menus)
+  - Accordions/tabs (use HTML details/summary or CSS)
+  - Simple forms (use native HTML forms)
+  - Modals/overlays (use HTML dialog element or CSS)
+  - Animations (use CSS animations/transitions)
+  - Toggles/switches (use CSS checkbox styling)
 
 ### Tina CMS
 - **Purpose**: Git-based headless CMS
@@ -37,12 +47,15 @@ This project is a modern static marketing site built with a powerful combination
 ```
 /
 ├── src/
-│   ├── components/       # Preact components
-│   │   ├── Header.tsx
-│   │   ├── Footer.tsx
-│   │   ├── Hero.tsx
-│   │   ├── Features.tsx
-│   │   └── ContactForm.tsx
+│   ├── components/       # Mostly Astro components
+│   │   ├── Header.astro
+│   │   ├── Footer.astro
+│   │   ├── Hero.astro
+│   │   ├── Features.astro
+│   │   ├── Navigation.astro
+│   │   ├── Card.astro
+│   │   └── interactive/  # Preact (only when needed)
+│   │       └── ContactForm.tsx
 │   ├── layouts/          # Astro layouts
 │   │   ├── BaseLayout.astro
 │   │   └── PageLayout.astro
@@ -82,30 +95,29 @@ This project is a modern static marketing site built with a powerful combination
    npm create astro@latest
    ```
 
-2. **Install Preact integration**
+2. **Install Tina CMS**
    ```bash
+   npm install tinacms @tinacms/cli
+   ```
+
+3. **Install Preact integration (ONLY if needed)**
+   ```bash
+   # Wait until you actually need client-side interactivity
+   # Most sites won't need this initially
    npx astro add preact
    ```
 
-3. **Install Tina CMS**
-   ```bash
-   npm install tinacms
-   ```
-
-4. **Install additional dependencies**
-   ```bash
-   npm install @tinacms/cli
-   ```
+   **Note**: Start without Preact and only add it when you encounter a feature that truly requires client-side JavaScript beyond what HTML/CSS can provide.
 
 ### Configuration
 
 #### Astro Config (`astro.config.mjs`)
 ```javascript
 import { defineConfig } from 'astro/config';
-import preact from '@astrojs/preact';
+// import preact from '@astrojs/preact'; // Only add when needed
 
 export default defineConfig({
-  integrations: [preact()],
+  // integrations: [preact()], // Only uncomment if you need Preact
   site: 'https://yoursite.com',
 });
 ```
@@ -186,10 +198,13 @@ npm run preview
 ## Key Features
 
 ### Performance Optimization
-- **Island Architecture**: Only interactive components hydrate
-- **Lazy Loading**: Components load on demand
+- **Zero JavaScript by Default**: Astro ships no JS unless explicitly needed
+- **HTML/CSS First**: Most features implemented without JavaScript
+- **Island Architecture**: Only Preact components hydrate (when absolutely necessary)
+- **Minimal Bundle**: Target <10KB total JavaScript for entire site
 - **Image Optimization**: Automatic image optimization with Astro
 - **CSS Optimization**: Scoped styles, minimal CSS
+- **Progressive Enhancement**: Site fully functional without JavaScript
 
 ### Content Management
 - **Visual Editing**: Real-time preview while editing
@@ -200,8 +215,10 @@ npm run preview
 ### Developer Experience
 - **TypeScript**: Type safety across the stack
 - **Hot Module Replacement**: Fast development feedback
-- **Component Reusability**: Preact components work everywhere
+- **Zero-JavaScript by Default**: No client-side JS unless explicitly needed
+- **Component Reusability**: Astro components compose easily
 - **File-Based Routing**: Intuitive page creation
+- **Progressive Enhancement**: Site works without JavaScript
 
 ## Page Types
 
@@ -227,23 +244,154 @@ npm run preview
 - FAQ section
 
 ### Contact Page
-- Contact form (Preact component)
+- Contact form (native HTML form with Astro endpoint)
 - Contact information
-- Map integration
+- Map integration (static or iframe)
 
 ## Components Architecture
 
-### Static Components (Astro)
-- Layout components
-- SEO components
-- Non-interactive sections
+### Philosophy: HTML/CSS First, Astro Second, Preact Last
 
-### Interactive Components (Preact)
-- Navigation with mobile menu
-- Contact forms
-- Modal dialogs
-- Interactive pricing calculators
-- Newsletter signup forms
+The site follows a progressive enhancement approach:
+1. **First**: Try to solve with HTML/CSS
+2. **Second**: Use Astro components for static/server-side logic
+3. **Last Resort**: Use Preact only when client-side JavaScript is absolutely required
+
+### Astro Components (Primary)
+Use Astro for 95% of the site:
+- **All layout components** (BaseLayout, PageLayout)
+- **All static sections** (Hero, Features, Testimonials, Footer)
+- **Navigation** (including mobile menus using CSS)
+- **SEO components** (meta tags, structured data)
+- **Cards, grids, and content displays**
+- **Accordions** (using `<details>` and `<summary>`)
+- **Tabs** (using CSS-only solutions)
+- **Simple forms** (using native HTML with server-side handling)
+
+### HTML/CSS Solutions (No JavaScript Needed)
+Many "interactive" features can be built without JavaScript:
+- **Mobile Navigation**: CSS-only hamburger menu with checkbox hack
+- **Accordions**: Native `<details>` and `<summary>` elements
+- **Tabs**: CSS `:target` or radio button pattern
+- **Modals**: HTML `<dialog>` element or CSS overlay
+- **Tooltips**: CSS hover states
+- **Smooth Scrolling**: CSS `scroll-behavior: smooth`
+- **Animations**: CSS transitions and keyframes
+- **Dropdowns**: CSS hover or `:focus-within`
+
+### Preact Components (Minimal - Only When Necessary)
+Use Preact ONLY when you need:
+- **Complex Form Validation**: Multi-step forms with conditional fields
+- **Real-time Data**: Live search, dynamic filtering, API polling
+- **Complex State**: Shopping carts, multi-step wizards with client state
+- **Third-party Integrations**: Embedded widgets requiring JavaScript
+- **Advanced Interactions**: Drag-and-drop, rich text editors, complex calculators
+
+### Real-World Preact Examples (Justified Use Cases)
+
+✅ **GOOD - Justified Preact Usage:**
+- Interactive pricing calculator with real-time API calls for tax/shipping
+- Multi-step form wizard with conditional fields based on user selections
+- Live product search with debounced API requests and filtering
+- Embedded chat widget from third-party service
+- Rich text editor for user-generated content
+
+❌ **BAD - Unnecessary Preact Usage:**
+- Navigation menu (use CSS)
+- Simple contact form (use HTML form + Astro endpoint)
+- Image carousel (use CSS scroll-snap)
+- Accordion/FAQ (use `<details>` element)
+- Modal popups (use `<dialog>` element)
+- Animations (use CSS transitions)
+- Toggle switches (use styled checkboxes)
+
+### Example Decision Tree
+```
+Need interactivity?
+├─ Can it be done with CSS? → Use CSS
+├─ Does it need server data? → Use Astro (SSR/SSG)
+├─ Is it a simple form? → Use HTML form with Astro endpoint
+└─ Complex client state/API calls? → Use Preact (sparingly)
+```
+
+## Common Features Without JavaScript
+
+Here are practical examples of implementing common marketing site features without Preact:
+
+### Mobile Navigation Menu (CSS Only)
+```astro
+<!-- No JavaScript needed! -->
+<input type="checkbox" id="menu-toggle" hidden>
+<label for="menu-toggle" class="hamburger">☰</label>
+<nav class="mobile-menu">
+  <a href="/">Home</a>
+  <a href="/about">About</a>
+  <a href="/contact">Contact</a>
+</nav>
+
+<style>
+  .mobile-menu { display: none; }
+  #menu-toggle:checked ~ .mobile-menu { display: block; }
+</style>
+```
+
+### FAQ Accordion (Native HTML)
+```astro
+<details>
+  <summary>What is your pricing?</summary>
+  <p>Our pricing starts at $10/month...</p>
+</details>
+```
+
+### Contact Form (Astro Endpoint)
+```astro
+<!-- src/pages/contact.astro -->
+<form method="POST" action="/api/contact">
+  <input type="email" name="email" required>
+  <textarea name="message" required></textarea>
+  <button type="submit">Send</button>
+</form>
+```
+
+```typescript
+// src/pages/api/contact.ts
+export async function POST({ request }) {
+  const data = await request.formData();
+  // Handle form submission server-side
+  return new Response(JSON.stringify({ success: true }));
+}
+```
+
+### Tabs (CSS :target)
+```astro
+<nav>
+  <a href="#tab1">Tab 1</a>
+  <a href="#tab2">Tab 2</a>
+</nav>
+<div id="tab1" class="tab-content">Content 1</div>
+<div id="tab2" class="tab-content">Content 2</div>
+
+<style>
+  .tab-content { display: none; }
+  .tab-content:target { display: block; }
+</style>
+```
+
+### Modal Dialog (Native HTML)
+```astro
+<dialog id="my-modal">
+  <h2>Modal Title</h2>
+  <p>Modal content</p>
+  <form method="dialog">
+    <button>Close</button>
+  </form>
+</dialog>
+
+<!-- Minimal JS only to open dialog -->
+<button onclick="document.getElementById('my-modal').showModal()">
+  Open Modal
+</button>
+```
 
 ## SEO Considerations
 
@@ -307,11 +455,21 @@ Your markdown content here...
 ## Best Practices
 
 ### Performance
-- Use Astro for static content
-- Use Preact only for interactive elements
+- **Default to zero JavaScript**: Use Astro components for everything possible
+- **Exhaust HTML/CSS solutions first**: Most "interactive" features don't need JS
+- **Preact as last resort**: Only when HTML/CSS and Astro can't solve the problem
+- **Ship minimal JavaScript**: Target <10KB of JS for the entire site
 - Implement lazy loading for images
-- Minimize JavaScript bundle size
 - Use static site generation (SSG)
+- Audit bundle size regularly - any Preact component should be justified
+
+### JavaScript Usage Guidelines
+- Before adding Preact, ask: "Can this be done with CSS?"
+- Before adding state management, ask: "Can this be server-side?"
+- Document why each Preact component is necessary
+- Prefer native HTML elements (`<details>`, `<dialog>`, `<form>`)
+- Use CSS for animations, transitions, and visual effects
+- Use Astro endpoints for form handling and server logic
 
 ### Content Management
 - Organize content in logical collections
@@ -339,16 +497,38 @@ Your markdown content here...
 - Page load times
 - Bundle size analysis
 
+## Performance Targets
+
+The site should aim for these metrics:
+
+### Lighthouse Scores
+- **Performance**: 95-100
+- **Accessibility**: 95-100
+- **Best Practices**: 95-100
+- **SEO**: 95-100
+
+### Core Web Vitals
+- **LCP** (Largest Contentful Paint): <2.5s
+- **FID** (First Input Delay): <100ms
+- **CLS** (Cumulative Layout Shift): <0.1
+
+### Bundle Size
+- **Total JavaScript**: <10KB (ideally 0KB)
+- **First Load**: <50KB
+- **Images**: Optimized and lazy-loaded
+
 ## Future Enhancements
 
-- [ ] Blog functionality
-- [ ] Multi-language support
-- [ ] Advanced analytics integration
-- [ ] A/B testing capabilities
-- [ ] Enhanced form handling
-- [ ] Search functionality
-- [ ] Customer portal
-- [ ] Integration with CRM/email marketing
+When adding features, always consider the HTML/CSS-first approach:
+
+- [ ] Blog functionality (Astro with Tina CMS)
+- [ ] Multi-language support (Astro i18n)
+- [ ] Analytics integration (lightweight, privacy-focused)
+- [ ] Search functionality (consider static search or Astro endpoint)
+- [ ] Newsletter signup (HTML form → Astro endpoint → email service)
+- [ ] Integration with CRM/email marketing (server-side)
+
+**Note**: Evaluate each enhancement against the zero-JavaScript principle. Only add client-side JavaScript when truly necessary.
 
 ## Resources
 
