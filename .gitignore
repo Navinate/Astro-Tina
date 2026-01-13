@@ -28,5 +28,5 @@ pnpm-debug.log*
 .vscode/
 
 # Tina CMS
-.tina/__generated__/
-admin/
+tina/__generated__/
+public/admin/

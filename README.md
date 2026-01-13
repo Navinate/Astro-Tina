@@ -20,15 +20,27 @@ pnpm install
 
 ### 2. Set Up Environment Variables
 
-Copy `.env.example` to `.env` and fill in your Tina CMS credentials:
+Copy `.env.example` to `.env`:
 
 ```bash
 cp .env.example .env
 ```
 
-Get your Tina CMS credentials from [tina.io](https://tina.io) after creating a project.
+**For local-only development**: Leave `TINA_CLIENT_ID` and `TINA_TOKEN` empty in the `.env` file.
 
-### 3. Run Development Server
+**For Tina Cloud features**: Get credentials from [tina.io](https://tina.io) after creating a project.
+
+### 3. Build Tina Admin (First Time Only)
+
+Generate the Tina CMS admin interface:
+
+```bash
+pnpm exec tinacms build --local --skip-cloud-checks
+```
+
+This creates the admin interface at `public/admin/index.html`.
+
+### 4. Run Development Server
 
 ```bash
 # Option 1: Start Astro dev server only
